@@ -9,4 +9,6 @@ if ENV['PG_URI'].nil? && ARGV.size < 2
   Dotenv.load!
 end
 
+require 'bundler'
+
 Md::Show.start!

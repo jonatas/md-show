@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bundler/setup'
+
 require_relative "show/version"
 require_relative "show/app"
 

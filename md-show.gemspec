@@ -27,15 +27,14 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
     end
   end
-  spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.bindir = "bin"
+  spec.executables = "md-show"
   spec.require_paths = ["lib"]
   spec.add_dependency 'sinatra'
   spec.add_dependency 'dotenv'
   spec.add_dependency 'redcarpet'
   spec.add_dependency 'pg'
   spec.add_dependency 'json'
-  spec.add_dependency 'puma'
 
   spec.add_development_dependency "pry"
 end

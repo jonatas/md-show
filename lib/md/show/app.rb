@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'redcarpet'
+require 'pg'
 
 class Md::Show::App < Sinatra::Base
   def pg_uri
@@ -23,14 +24,14 @@ class Md::Show::App < Sinatra::Base
 
   # Run the SQL code snippet and return the result
   def run_query(conn, sql)
-    return if sql !~ /^\s*SELECT\t/i
+    #return if sql !~ /^\s*SELECT\t/i
     result = conn.exec(sql)
     response = result.map(&:to_h)
     puts({sql: sql, response: response})
     response
   end
 
-  set :public_folder, File.join(File.dirname(__FILE__),"../../public")
+  set :public_folder, File.join(File.dirname(__FILE__),"../../../public")
 
   get '/' do
     # Render the markdown file
@@ -48,8 +49,8 @@ class Md::Show::App < Sinatra::Base
       <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/components/prism-sql.min.js"></script>
       <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      <script type="text/javascript" src="main.js"></script>
-      <link rel="stylesheet" href="main.css">
+      <script src="/main.js"></script>
+      <link rel="stylesheet" href="/main.css">
     </head>
     <button id="first-slide">⏮</button>
     <button id="previous-slide">⬅️</button>
@@ -62,16 +63,12 @@ class Md::Show::App < Sinatra::Base
     html
   end
 
-  get '/main.js' do
-    content_type :js
-    send_file File.join(settings.public_folder, 'main.js')
-  end
-
   def parse_aggregated_results(data)
     data.map do |hash|
-      hash.transform_values{|e|cast_results(e)}
+      hash.transform_values{|e|JSON.parse(e) rescue cast_results(e)}
     end
   end
+
   def cast_results(e)
     return [] unless e
     return e unless e.start_with?("{") && e.end_with?("}")
@@ -96,8 +93,10 @@ class Md::Show::App < Sinatra::Base
     result = nil
     connect_to_db do |conn|
       begin
+        puts query
         result = conn.exec(query)
       rescue PG::Error => e
+        puts "Ops!", e.message
         return [500, { message: e.message }.to_json]
       end
     end

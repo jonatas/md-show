@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   spec.add_dependency 'sinatra'
+  spec.add_dependency 'dotenv'
   spec.add_dependency 'redcarpet'
   spec.add_dependency 'pg'
   spec.add_dependency 'json'

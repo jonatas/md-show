@@ -4,4 +4,9 @@
 require "bundler/setup"
 require "md/show"
 
+if ENV['PG_URI'].nil? && ARGV.size < 2
+  require 'dotenv'
+  Dotenv.load!
+end
+
 Md::Show.start!

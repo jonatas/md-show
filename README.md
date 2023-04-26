@@ -1,22 +1,28 @@
-# Md::Show
+# Markdown Show
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/md/show`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem was created to allow me to run my own presentations.
 
-TODO: Delete this and the text above, and describe your gem
+I'm a big fan of markdown and I'd like to turn my simplest markdown files into
+interactive presentations.
+
+Features:
+
+* Presentation mode: Breaks down all H1 as new slides. Hides rest of content and support keyboard navigation.
+* Run SQL: Any SQL snippet from your markdown can be run in a backend server.
+    Check for [demo-sql.md](./demo-sql.md) as an example.
 
 ## Installation
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add md-show
-
-If bundler is not being used to manage dependencies, install the gem by executing:
 
     $ gem install md-show
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ md-show your-md-file.md "your-postgresql-uri"
+
+The interesting part of this lib is the column auto detection which allows us to
+just plot data detecting columns named as `x` and `y`. I initially built this tool
+for my [data science workshop](https://github.com/jonatas/sql-data-science-training)
+and now I'm making it available to allow me to use it in different scenarios.
 
 ## Development
 
@@ -24,9 +30,12 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+The [public](./public) directory contains the front end files. The server is a
+sinatra app just allowing to run the presentation.
+
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/md-show. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/md-show/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/jonatas/md-show. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/jonatas/md-show/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -34,4 +43,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Md::Show project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/md-show/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Md::Show project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/jonatas/md-show/blob/main/CODE_OF_CONDUCT.md).

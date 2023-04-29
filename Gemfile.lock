@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    md-show (0.1.0)
+    md-show (0.1.1)
       dotenv
       json
       pg
@@ -23,13 +23,13 @@ GEM
     parallel (1.22.1)
     parser (3.1.3.0)
       ast (~> 2.4.1)
-    pg (1.4.6)
+    pg (1.5.3)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     puma (6.0.0)
       nio4r (~> 2.0)
-    rack (2.2.6.2)
+    rack (2.2.7)
     rack-protection (3.0.5)
       rack
     rainbow (3.1.1)

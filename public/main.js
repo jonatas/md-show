@@ -35,13 +35,33 @@ function fetchQuery(event) {
   element = parent(event.target, "code");
   element.removeEventListener("click", fetchQuery);
   query = element.innerText;
+
+  // Add a timer span element to the SQL code snippet
+  let timer = document.createElement("span");
+  timer.className = "query-timer";
+  timer.innerHTML = "0.00s";
+  element.appendChild(timer);
+
+  // Start the timer
+  let startTime = performance.now();
+  let timerInterval = setInterval(() => {
+    let currentTime = performance.now();
+    let elapsedTime = (currentTime - startTime) / 1000;
+    timer.innerHTML = `${elapsedTime.toFixed(2)}s`;
+  }, 100);
+
   fetch("/query", {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query })
   })
     .then(response => response.json())
-    .then(data => renderResult(data, element));
+    .then(data => {
+      // Stop the timer
+      clearInterval(timerInterval);
+      element.classList.remove("loading");
+      renderResult(data, element);
+    });
 }
 
 function plot(data, element){

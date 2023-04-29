@@ -29,6 +29,7 @@ button {
 body.presentation-mode{
   font-family: "Open Sans", sans-serif;
 }
+
 blockquote > p {
   font-size: 150%;
   font-style: italic;
@@ -37,3 +38,14 @@ blockquote > p {
   border-left: 5px solid #ccc;
   padding: 10px 20px;
 }
+
+.query-timer {
+  position: relative;
+  display: block;
+  right: -95%;
+  font-size: 200%;
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+

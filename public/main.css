@@ -3,6 +3,7 @@ table {
   border-collapse: collapse;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
+  font-size: 140%;
 }
 
 td, th {
@@ -42,10 +43,21 @@ blockquote > p {
 .query-timer {
   position: relative;
   display: block;
-  right: -95%;
-  font-size: 200%;
+  right: -75%;
+  padding: 5%;
+  font-size: 140%;
   font-family: monospace;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.2);
   z-index: 1;
+}
+
+body.presentation-mode .slide {
+  max-height: 90%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+body.presentation-mode pre {
+  font-size: 1.4em;
 }
 

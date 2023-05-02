@@ -137,7 +137,6 @@ function renderResult(res, element) {
 const adjustElementSize = (element, increaseSize, maxWidth, maxHeight) => {
   const adjustFontSize = (el, newSize) => {
     if (increaseSize) {
-      console.log("adjust size from ",el.style.fontSize, "to", newSize);
       el.style.fontSize = newSize;
     } else {
       el.style.fontSize = "";
@@ -153,7 +152,7 @@ const adjustElementSize = (element, increaseSize, maxWidth, maxHeight) => {
     let currentHeight = element.offsetHeight * 0.2;
 
     while (currentWidth < maxWidth && currentHeight < maxHeight) {
-      newSize += 2;
+      newSize += 5;
       adjustFontSize(element, newSize + "px");
       currentWidth = element.offsetWidth;
       currentHeight = element.offsetHeight;

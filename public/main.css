@@ -1,66 +1,168 @@
-table {
-  font-family: 'Open Sans', sans-serif;
-  border-collapse: collapse;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  font-size: 140%;
+/* Modern Reset and Base Styles */
+* {
+  box-sizing: border-box;
 }
 
-td, th {
-  padding: 10px;
-  border: 1px solid #ddd;
+body {
+  font-family: "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Navigation Buttons */
+button {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Content Container */
+body:not(.presentation-mode) {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: #2c3e50;
+}
+
+h1 {
+  font-size: 2.5em;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 2em;
+  color: #34495e;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: #7f8c8d;
+}
+
+p {
+  margin-bottom: 1em;
+  font-size: 1.1em;
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 20px;
+  margin-bottom: 1em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+
+/* Code Blocks */
+pre {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: "Fira Code", "Monaco", "Menlo", monospace;
+  font-size: 0.9em;
+  line-height: 1.4;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3498db;
+}
+
+code {
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Fira Code", "Monaco", "Menlo", monospace;
+  font-size: 0.9em;
+  color: #e74c3c;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  font-size: 1em;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+th {
+  background: #3498db;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 tr:hover {
-  background-color: #ddd;
+  background: #f8f9fa;
+  transition: background-color 0.2s ease;
 }
 
-pre {
-  font-family: monospace;
-  padding: 10px;
-  border: 1px solid #ccc;
-  white-space: pre-wrap;
-}
-
-button {
-  padding: 0px;
-  border: 0px;
-}
-
-body.presentation-mode{
-  font-family: "Open Sans", sans-serif;
+/* Blockquotes */
+blockquote {
+  margin: 20px 0;
+  padding: 0;
+  border: none;
 }
 
 blockquote > p {
-  font-size: 150%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  border-left: 5px solid #3498db;
+  font-size: 1.3em;
   font-style: italic;
-  color: #555;
-  background-color: #f9f9f9;
-  border-left: 5px solid #ccc;
-  padding: 10px 20px;
+  margin: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.query-timer {
-  position: relative;
-  display: block;
-  right: -75%;
-  padding: 5%;
-  font-size: 140%;
-  font-family: monospace;
-  background-color: rgba(255, 255, 255, 0.2);
-  z-index: 1;
-}
-
-body.presentation-mode .slide {
-  max-height: 90%;
-  max-width: 100%;
-  overflow: auto;
-}
-
-body.presentation-mode pre {
-  font-size: 1.4em;
-}
-
+/* Images */
 img {
   max-width: 90vw;
   max-height: 90vh;
@@ -68,11 +170,182 @@ img {
   height: auto;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Query Timer */
+.query-timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(52, 152, 219, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.9em;
+  font-weight: 600;
+  z-index: 10;
+}
+
+/* PRESENTATION MODE STYLES */
+body.presentation-mode {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  padding: 0;
+  overflow: hidden;
+}
+
+body.presentation-mode .slide {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 60px;
+  background: white;
+  overflow: auto;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Presentation Mode Typography */
+body.presentation-mode h1 {
+  font-size: 3.5em;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 4px solid #3498db;
+  padding-bottom: 20px;
+}
+
+body.presentation-mode h2 {
+  font-size: 2.8em;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+body.presentation-mode h3 {
+  font-size: 2em;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+body.presentation-mode p {
+  font-size: 1.4em;
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+  text-align: justify;
+}
+
+body.presentation-mode ul, body.presentation-mode ol {
+  font-size: 1.3em;
+  line-height: 1.8;
+}
+
+body.presentation-mode li {
+  margin-bottom: 0.8em;
+  font-size: 1em;
+}
+
+/* Presentation Mode Code */
+body.presentation-mode pre {
+  font-size: 1.2em;
+  margin: 30px 0;
+  position: relative;
+  background: #1e1e1e;
+}
+
+body.presentation-mode code {
+  font-size: 1em;
+}
+
+/* Presentation Mode Tables */
+body.presentation-mode table {
+  font-size: 1.2em;
+  margin: 30px auto;
+}
+
+body.presentation-mode th, body.presentation-mode td {
+  padding: 20px;
+}
+
+/* Presentation Mode Images */
 body.presentation-mode .slide img {
   max-width: 70vw;
   max-height: 70vh;
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Presentation Mode Blockquotes */
+body.presentation-mode blockquote > p {
+  font-size: 1.6em;
+  text-align: center;
+  padding: 40px;
+  margin: 40px 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation in Presentation Mode */
+body.presentation-mode button {
+  position: fixed;
+  bottom: 30px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  font-size: 20px;
+  padding: 15px 20px;
+}
+
+body.presentation-mode #first-slide { left: 30px; }
+body.presentation-mode #previous-slide { left: 120px; }
+body.presentation-mode #start-presentation, 
+body.presentation-mode #stop-presentation { left: 50%; transform: translateX(-50%); }
+body.presentation-mode #next-slide { right: 120px; }
+body.presentation-mode #last-slide { right: 30px; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body:not(.presentation-mode) {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  body.presentation-mode .slide {
+    padding: 30px 20px;
+  }
+  
+  body.presentation-mode h1 {
+    font-size: 2.5em;
+  }
+  
+  body.presentation-mode h2 {
+    font-size: 2em;
+  }
+  
+  body.presentation-mode p {
+    font-size: 1.2em;
+  }
+  
+  body.presentation-mode button {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
 }
 

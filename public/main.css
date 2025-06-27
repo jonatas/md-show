@@ -61,3 +61,18 @@ body.presentation-mode pre {
   font-size: 1.4em;
 }
 
+img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+body.presentation-mode .slide img {
+  max-width: 70vw;
+  max-height: 70vh;
+}
+

@@ -134,51 +134,6 @@ function renderResult(res, element) {
   }
 }
 
-const adjustElementSize = (element, increaseSize, maxWidth, maxHeight) => {
-  const adjustFontSize = (el, newSize) => {
-    if (increaseSize) {
-      el.style.fontSize = newSize;
-    } else {
-      el.style.fontSize = "";
-    }
-  };
-
-  if (!increaseSize) {
-    adjustFontSize(element, "");
-    return;
-  }else {
-    let newSize = parseFloat(window.getComputedStyle(element).fontSize);
-    let currentWidth = element.offsetWidth * 0.05;
-    let currentHeight = element.offsetHeight * 0.2;
-
-    while (currentWidth < maxWidth && currentHeight < maxHeight) {
-      newSize += 5;
-      adjustFontSize(element, newSize + "px");
-      currentWidth = element.offsetWidth;
-      currentHeight = element.offsetHeight;
-    }
-  }
-
-  element.childNodes.forEach((child) => {
-    if (child.nodeType === Node.ELEMENT_NODE) {
-      adjustElementSize(child, increaseSize, maxWidth, maxHeight);
-    }
-  });
-};
-
-const adjustSnippetSize = (slide, increaseSize) => {
-
-  const maxWidth = window.innerWidth / 2;
-  const maxHeight = window.innerHeight / 2;
-
-  slide.querySelectorAll("pre, h1, h2").forEach((element) => {
-    adjustElementSize(element, increaseSize, maxWidth * 0.2, maxHeight * 0.2);
-  });
-  slide.querySelectorAll("p, h3, ul, li").forEach((element) => {
-    adjustElementSize(element, increaseSize, maxWidth * 0.3, maxHeight * 0.3);
-  });
-};
-
 function bindPresentationMode(){
   let sections = all("h1, h2");
   for (let i = 0; i < sections.length; i++) {
@@ -201,11 +156,9 @@ function bindPresentationMode(){
   const slides = all(".slide");
 
   const showSlide = function(slideNumber) {
-    adjustSnippetSize(slides[currentSlide], false);
     slides[currentSlide].style.display = "none";
     currentSlide = slideNumber;
     slides[slideNumber].style.display = "block";
-    adjustSnippetSize(slides[currentSlide], true);
   };
 
   const nextSlide = function () {
@@ -237,12 +190,10 @@ function bindPresentationMode(){
     on("#start-presentation").style.display = "none";
     on("#stop-presentation").style.display = "inline";
 
-
     document.addEventListener("keydown", keyboardShortcuts);
   };
 
   const htmlMode = function() {
-    adjustSnippetSize(slides[currentSlide], false);
     slides.forEach(function(slide) {
       slide.style.display = "block";
     });

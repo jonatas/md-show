@@ -205,7 +205,7 @@ body.presentation-mode .slide {
   left: 0;
   width: 100vw;
   height: 100vh;
-  padding: 40px 60px 120px 60px;
+  padding: 40px 60px 60px 60px;
   background: white;
   overflow-y: auto;
   overflow-x: hidden;
@@ -226,85 +226,97 @@ body.presentation-mode .slide {
 
 /* Presentation Mode Typography */
 body.presentation-mode h1 {
-  font-size: 3.5em;
+  font-size: clamp(1.8rem, 4vw, 3rem);
   color: #2c3e50;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 0.5em;
   border-bottom: 4px solid #3498db;
-  padding-bottom: 20px;
+  padding-bottom: 0.2em;
+  line-height: 1.1;
 }
 
 body.presentation-mode h2 {
-  font-size: 2.8em;
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
   color: #34495e;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 0.4em;
+  line-height: 1.1;
 }
 
 body.presentation-mode h3 {
-  font-size: 2em;
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
   color: #7f8c8d;
-  margin-bottom: 20px;
+  margin-bottom: 0.3em;
+  line-height: 1.1;
 }
 
 body.presentation-mode p {
-  font-size: 1.4em;
-  line-height: 1.8;
-  margin-bottom: 1.5em;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  line-height: 1.2;
+  margin-bottom: 0.5em;
   text-align: justify;
 }
 
 body.presentation-mode ul, body.presentation-mode ol {
-  font-size: 1.3em;
-  line-height: 1.8;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  padding-left: 1.5em;
 }
 
 body.presentation-mode li {
-  margin-bottom: 0.8em;
+  margin-bottom: 0.2em;
   font-size: 1em;
+  line-height: 1.2;
 }
 
 /* Presentation Mode Code */
 body.presentation-mode pre {
-  font-size: 1.1em;
-  margin: 20px 0;
+  font-size: clamp(1rem, 2.2vw, 1.6rem);
+  margin: 0.5em 0;
   position: relative;
   background: #1e1e1e;
-  max-height: 60vh;
+  max-height: 75vh;
   overflow: auto;
+  line-height: 1.2;
+  padding: 1em;
 }
 
 body.presentation-mode code {
-  font-size: 1em;
+  font-size: clamp(1rem, 2.2vw, 1.6rem);
+  line-height: 1.2;
 }
 
 /* Presentation Mode Tables */
 body.presentation-mode table {
-  font-size: 1.2em;
-  margin: 30px auto;
+  font-size: clamp(1rem, 2.3vw, 1.7rem);
+  margin: 0.8em auto;
+  line-height: 1.2;
 }
 
 body.presentation-mode th, body.presentation-mode td {
-  padding: 20px;
+  padding: 8px 12px;
+  line-height: 1.2;
 }
 
 /* Presentation Mode Images */
 body.presentation-mode .slide img {
-  max-width: 70vw;
-  max-height: 70vh;
-  margin: 30px auto;
+  max-width: 80vw;
+  max-height: 60vh;
+  margin: 0.8em auto;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Presentation Mode Blockquotes */
 body.presentation-mode blockquote > p {
-  font-size: 1.6em;
+  font-size: clamp(1.2rem, 2.6vw, 1.9rem);
   text-align: center;
-  padding: 40px;
-  margin: 40px 0;
+  padding: 1.5em;
+  margin: 0.8em 0;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
 }
 
 /* Navigation in Presentation Mode */
@@ -333,19 +345,7 @@ body.presentation-mode #last-slide { right: 30px; }
   }
   
   body.presentation-mode .slide {
-    padding: 30px 20px;
-  }
-  
-  body.presentation-mode h1 {
-    font-size: 2.5em;
-  }
-  
-  body.presentation-mode h2 {
-    font-size: 2em;
-  }
-  
-  body.presentation-mode p {
-    font-size: 1.2em;
+    padding: 20px 15px;
   }
   
   body.presentation-mode button {

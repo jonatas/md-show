@@ -31,6 +31,274 @@ function runSelectStatements(){
   }
 }
 
+// Initialize syntax highlighting for all code blocks
+function initializeSyntaxHighlighting() {
+  // Configure Prism settings
+  if (typeof Prism !== 'undefined') {
+    Prism.plugins.NormalizeWhitespace.setDefaults({
+      'remove-trailing': true,
+      'remove-indent': true,
+      'left-trim': true,
+      'right-trim': true
+    });
+    
+    // Re-highlight all code blocks
+    Prism.highlightAll();
+    
+    // Add copy functionality to all code blocks
+    addCopyButtons();
+  }
+  
+  // Initialize Mermaid diagrams
+  initializeMermaid();
+}
+
+// Initialize Mermaid diagrams
+function initializeMermaid() {
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'default',
+      themeVariables: {
+        primaryColor: '#3498db',
+        primaryTextColor: '#2c3e50',
+        primaryBorderColor: '#2980b9',
+        lineColor: '#34495e',
+        secondaryColor: '#ecf0f1',
+        tertiaryColor: '#f8f9fa'
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: 'basis'
+      },
+      sequence: {
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+        width: 150,
+        height: 65,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35,
+        mirrorActors: true,
+        bottomMarginAdj: 1,
+        useMaxWidth: true,
+        rightAngles: false,
+        showSequenceNumbers: false
+      },
+      gantt: {
+        useMaxWidth: true,
+        barHeight: 20,
+        fontSize: 11,
+        fontFamily: '"Open Sans", sans-serif'
+      }
+    });
+
+    // Render all Mermaid diagrams
+    renderMermaidDiagrams();
+  }
+}
+
+// Render all Mermaid diagrams on the page
+function renderMermaidDiagrams() {
+  const mermaidElements = all('.mermaid');
+  
+  mermaidElements.forEach((element, index) => {
+    try {
+      // Generate a unique ID if not already set
+      if (!element.id) {
+        element.id = `mermaid-${index}-${Date.now()}`;
+      }
+      
+      const content = element.textContent || element.innerText;
+      if (content.trim()) {
+        // Clear the element content first
+        element.innerHTML = '';
+        
+        // Render the diagram
+        mermaid.render(element.id + '-svg', content).then(({svg}) => {
+          element.innerHTML = svg;
+          
+          // Add click-to-zoom functionality
+          addMermaidZoom(element);
+          
+          // Add export functionality
+          addMermaidExport(element, content);
+        }).catch((error) => {
+          console.error('Mermaid rendering error:', error);
+          element.innerHTML = `<div class="mermaid-error">
+            <p>Error rendering diagram:</p>
+            <pre>${error.message}</pre>
+            <details>
+              <summary>View source</summary>
+              <pre><code>${content}</code></pre>
+            </details>
+          </div>`;
+        });
+      }
+    } catch (error) {
+      console.error('Mermaid initialization error:', error);
+      element.innerHTML = `<div class="mermaid-error">
+        <p>Error initializing diagram: ${error.message}</p>
+      </div>`;
+    }
+  });
+}
+
+// Add zoom functionality to Mermaid diagrams
+function addMermaidZoom(element) {
+  const svg = element.querySelector('svg');
+  if (svg) {
+    svg.style.cursor = 'zoom-in';
+    svg.addEventListener('click', () => {
+      const modal = document.createElement('div');
+      modal.className = 'mermaid-modal';
+      modal.innerHTML = `
+        <div class="mermaid-modal-content">
+          <span class="mermaid-modal-close">&times;</span>
+          <div class="mermaid-modal-diagram">
+            ${svg.outerHTML}
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // Close modal functionality
+      const closeBtn = modal.querySelector('.mermaid-modal-close');
+      const modalContent = modal.querySelector('.mermaid-modal-content');
+      
+      closeBtn.addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+      
+      // ESC key to close
+      const escHandler = (e) => {
+        if (e.key === 'Escape') {
+          modal.remove();
+          document.removeEventListener('keydown', escHandler);
+        }
+      };
+      document.addEventListener('keydown', escHandler);
+    });
+  }
+}
+
+// Add export functionality to Mermaid diagrams
+function addMermaidExport(element, source) {
+  const container = element.closest('.mermaid-container');
+  if (container && !container.querySelector('.mermaid-controls')) {
+    const controls = document.createElement('div');
+    controls.className = 'mermaid-controls';
+    controls.innerHTML = `
+      <button class="mermaid-btn mermaid-copy" title="Copy source">📋</button>
+      <button class="mermaid-btn mermaid-download" title="Download SVG">💾</button>
+      <button class="mermaid-btn mermaid-zoom" title="View fullscreen">🔍</button>
+    `;
+    
+    container.appendChild(controls);
+    
+    // Copy source functionality
+    controls.querySelector('.mermaid-copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(source).then(() => {
+        showToast('Mermaid source copied to clipboard!');
+      });
+    });
+    
+    // Download SVG functionality
+    controls.querySelector('.mermaid-download').addEventListener('click', () => {
+      const svg = element.querySelector('svg');
+      if (svg) {
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const blob = new Blob([svgData], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `mermaid-diagram-${Date.now()}.svg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showToast('Diagram downloaded as SVG!');
+      }
+    });
+    
+    // Fullscreen zoom functionality
+    controls.querySelector('.mermaid-zoom').addEventListener('click', () => {
+      addMermaidZoom(element);
+      element.querySelector('svg').click();
+    });
+  }
+}
+
+// Show toast notification
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 3000);
+}
+
+// Add copy buttons to code blocks
+function addCopyButtons() {
+  const codeBlocks = all('pre[class*="language-"]');
+  
+  codeBlocks.forEach(block => {
+    if (block.querySelector('.copy-button')) return; // Already has copy button
+    
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = '📋';
+    button.title = 'Copy to clipboard';
+    
+    button.addEventListener('click', () => {
+      const code = block.querySelector('code');
+      if (code) {
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          button.textContent = '✅';
+          setTimeout(() => {
+            button.textContent = '📋';
+          }, 2000);
+        }).catch(() => {
+          // Fallback for older browsers
+          const textarea = document.createElement('textarea');
+          textarea.value = code.textContent;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          
+          button.textContent = '✅';
+          setTimeout(() => {
+            button.textContent = '📋';
+          }, 2000);
+        });
+      }
+    });
+    
+    block.style.position = 'relative';
+    block.appendChild(button);
+  });
+}
+
 function fetchQuery(event) {
   element = parent(event.target, "code");
   element.removeEventListener("click", fetchQuery);
@@ -159,6 +427,26 @@ function bindPresentationMode(){
     slides[currentSlide].style.display = "none";
     currentSlide = slideNumber;
     slides[slideNumber].style.display = "block";
+    
+    // Re-render Mermaid diagrams in the current slide if needed
+    const slideMermaidElements = slides[slideNumber].querySelectorAll('.mermaid');
+    if (slideMermaidElements.length > 0) {
+      setTimeout(() => {
+        slideMermaidElements.forEach(element => {
+          if (!element.querySelector('svg')) {
+            const content = element.textContent || element.innerText;
+            if (content.trim() && typeof mermaid !== 'undefined') {
+              element.innerHTML = '';
+              mermaid.render(element.id + '-svg', content).then(({svg}) => {
+                element.innerHTML = svg;
+                addMermaidZoom(element);
+                addMermaidExport(element, content);
+              }).catch(console.error);
+            }
+          }
+        });
+      }, 100);
+    }
   };
 
   const nextSlide = function () {
@@ -218,5 +506,6 @@ function bindPresentationMode(){
 
 document.addEventListener("DOMContentLoaded", function() {
   runSelectStatements();
+  initializeSyntaxHighlighting();
   bindPresentationMode();
 });

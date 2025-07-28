@@ -337,6 +337,191 @@ body.presentation-mode #stop-presentation { left: 50%; transform: translateX(-50
 body.presentation-mode #next-slide { right: 120px; }
 body.presentation-mode #last-slide { right: 30px; }
 
+/* Mermaid Diagram Styles */
+.mermaid-container {
+  margin: 20px 0;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  min-height: 100px;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.mermaid svg:hover {
+  transform: scale(1.02);
+}
+
+/* Mermaid Controls */
+.mermaid-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mermaid-container:hover .mermaid-controls {
+  opacity: 1;
+}
+
+.mermaid-btn {
+  background: rgba(52, 152, 219, 0.9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.mermaid-btn:hover {
+  background: rgba(52, 152, 219, 1);
+  transform: translateY(-1px);
+}
+
+/* Mermaid Error Styling */
+.mermaid-error {
+  padding: 20px;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.mermaid-error pre {
+  background: #f1f3f4;
+  color: #333;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin: 10px 0;
+}
+
+/* Mermaid Modal */
+.mermaid-modal {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mermaid-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  max-width: 95vw;
+  max-height: 95vh;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.mermaid-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: #666;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2001;
+  background: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mermaid-modal-close:hover {
+  color: #333;
+}
+
+.mermaid-modal-diagram {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mermaid-modal-diagram svg {
+  max-width: 100%;
+  max-height: 85vh;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #2c3e50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateX(400px);
+  transition: transform 0.3s ease;
+  z-index: 1500;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+/* Copy Button for Code Blocks */
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(52, 152, 219, 0.9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+pre:hover .copy-button {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  background: rgba(52, 152, 219, 1);
+  transform: translateY(-1px);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   body:not(.presentation-mode) {
@@ -352,5 +537,32 @@ body.presentation-mode #last-slide { right: 30px; }
     padding: 12px 16px;
     font-size: 16px;
   }
+}
+
+/* Presentation Mode Mermaid Diagrams */
+body.presentation-mode .mermaid-container {
+  margin: 1em 0;
+  max-width: 90vw;
+  max-height: 75vh;
+  overflow: auto;
+}
+
+body.presentation-mode .mermaid {
+  padding: 1em;
+}
+
+body.presentation-mode .mermaid svg {
+  max-width: 85vw;
+  max-height: 70vh;
+  font-size: clamp(12px, 1.5vw, 16px);
+}
+
+body.presentation-mode .mermaid-controls {
+  opacity: 1;
+}
+
+body.presentation-mode .mermaid-btn {
+  padding: 10px 12px;
+  font-size: 16px;
 }
 
